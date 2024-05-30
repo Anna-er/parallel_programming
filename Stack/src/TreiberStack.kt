@@ -1,9 +1,9 @@
-package mpp.stack
+package stack
 
+import Node
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.loop
 
-private class Node<E>(val value: E, val next: Node<E>?)
 
 class TreiberStack<T> {
     private val headNode = atomic<Node<T>?>(null)

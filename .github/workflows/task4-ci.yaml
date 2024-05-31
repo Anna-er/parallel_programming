@@ -1,0 +1,29 @@
+name: CI for Task 4
+
+on:
+  push:
+    paths:
+      - 'Trees/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: 'Set up JDK'
+      uses: 'actions/setup-java@v4'
+      with:
+        java-version: '20'
+        distribution: 'zulu'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./task4/gradlew
+
+    - name: Grant execute permission for test script
+      run: chmod +x ./task4/run_task4_tests.sh
+
+    - name: Build & test
+      working-directory: ./task4
+      run: ./run_task4_tests.sh

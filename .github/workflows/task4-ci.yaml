@@ -25,5 +25,5 @@ jobs:
       run: chmod +x ./task4/run_task4_tests.sh
 
     - name: Build & test
-      working-directory: ./task4
+      working-directory: ./Trees
       run: ./run_task4_tests.sh

@@ -21,7 +21,7 @@ jobs:
       run: chmod +x ./Trees/gradlew
 
     - name: Grant execute permission for test script
-      run: chmod +x ./Tress/run_task4_tests.sh
+      run: chmod +x ./Trees/run_task4_tests.sh
 
     - name: Build & test
       working-directory: ./task4

@@ -15,6 +15,9 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:lincheck:2.26")
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 }
+tasks.register<Wrapper>("wrapper") {
+    gradleVersion = "8.5"
+}
 
 tasks.test {
     useJUnitPlatform()

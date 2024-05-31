@@ -1,6 +1,11 @@
-name: Java CI with Gradle
+name: Trees Tests
 
-on: push
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - Trees/**
+      - .github/workflows/trees-test.yml
 
 jobs:
   build:

@@ -38,18 +38,18 @@ valgrind --tool=helgrind ./crazy 4
 
 После запуска преобразованного кода, используя `Thread sanitizer` , программа вывела следующее предупреждение, указывающее на измененную часть кода:
 ```
-WARNING: ThreadSanitizer: data race (pid=21815)
-  Write of size 4 at 0x5648b724710c by thread T2:
-    #0 startStudent ./crazyprofessor.c:112 (crazy+0x19e1) (BuildId: fe80fc5c0b9efbe8374b9c1edb533629321025b8)
+WARNING: ThreadSanitizer: data race (pid=10880)
+  Write of size 4 at 0x56041da7912c by thread T2:
+    #0 startStudent <null> (crazy+0x1942)
 
-  Previous read of size 4 at 0x5648b724710c by thread T1:
-    #0 startProfessor ./crazyprofessor.c:67 (crazy+0x1760) (BuildId: fe80fc5c0b9efbe8374b9c1edb533629321025b8)
+  Previous read of size 4 at 0x56041da7912c by thread T1:
+    #0 startProfessor <null> (crazy+0x1711)
 
-  Location is global 'numStud' of size 4 at 0x5648b724710c (crazy+0x510c)
-  
+  Location is global 'numStud' of size 4 at 0x56041da7912c (crazy+0x00000000412c)
+
   <...>
 
-SUMMARY: ThreadSanitizer: data race ./crazyprofessor.c:112 in startStudent
+  SUMMARY: ThreadSanitizer: data race (/home/anna/Crazy-Professor-Synchronization/CPS/crazy+0x1942) in startStudent
 ```
 
 `Helgrin` тоже с задачей справился и вывел соответсующие предупреждения:
@@ -57,18 +57,21 @@ SUMMARY: ThreadSanitizer: data race ./crazyprofessor.c:112 in startStudent
 ```
 <...>
 
-==27303== Possible data race during write of size 4 at 0x10C0CC by thread #4
-==27303== Locks held: 1, at address 0x10C220
-==27303==    at 0x109825: startStudent (in ...)
-==27303==    by 0x491E1CE: ??? (in /usr/lib/libc.so.6)
-==27303==    by 0x499F503: clone (in /usr/lib/libc.so.6)
-==27303== 
-==27303== This conflicts with a previous read of size 4 by thread #2
-==27303== Locks held: none
-==27303==    at 0x10967A: startProfessor (in ...)
-==27303==    by 0x491E1CE: ??? (in /usr/lib/libc.so.6)
-==27303==    by 0x499F503: clone (in /usr/lib/libc.so.6)
-==27303==  Address 0x10c0cc is 0 bytes inside data symbol "numStud"
+==10404== Possible data race during read of size 4 at 0x10C0EC by thread #5
+==10404== Locks held: 1, at address 0x10C240
+==10404==    at 0x1097A0: startStudent (in /home/anna/Crazy-Professor-Synchronization/CPS/crazy)
+==10404==    by 0x483F876: mythread_wrapper (hg_intercepts.c:387)
+==10404==    by 0x4866EA6: start_thread (pthread_create.c:477)
+==10404==    by 0x497CACE: clone (clone.S:95)
+==10404== 
+==10404== This conflicts with a previous write of size 4 by thread #4
+==10404== Locks held: 1, at address 0x10C180
+==10404==    at 0x109949: QuestionDone (in /home/anna/Crazy-Professor-Synchronization/CPS/crazy)
+==10404==    by 0x10985E: startStudent (in /home/anna/Crazy-Professor-Synchronization/CPS/crazy)
+==10404==    by 0x483F876: mythread_wrapper (hg_intercepts.c:387)
+==10404==    by 0x4866EA6: start_thread (pthread_create.c:477)
+==10404==    by 0x497CACE: clone (clone.S:95)
+==10404==  Address 0x10c0ec is 0 bytes inside data symbol "numStud"
 
 <...>
 ```
